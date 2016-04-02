@@ -1,10 +1,17 @@
 package client;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
+import calculation.Calculation;
+import calculation.PICalc;
+import callback.Callback;
+import callback.ValueCallback;
 import remoteService.DoSomethingService;
+import server.commands.CalculationCommand;
 import server.commands.Command;
 import server.commands.RegisterCommand;
 import server.commands.LoginCommand;
@@ -20,12 +27,14 @@ public class Client {
 
 			DoSomethingService uRemoteObject = (DoSomethingService) registry.lookup("Service");
 			System.out.println("Service found");
-
-			Command rc = new RegisterCommand();
-			Command lc = new LoginCommand();
-			uRemoteObject.doSomething(rc);
-			uRemoteObject.doSomething(lc);
-
+			ValueCallback<BigDecimal> vc = new ValueCallback<BigDecimal>();
+			Callback<BigDecimal> stub = (Callback<BigDecimal>) UnicastRemoteObject.exportObject(vc, 0);
+			Calculation picalc = new PICalc(Integer.parseInt(args[0]));
+			Command calcCMD = new CalculationCommand(picalc, stub);
+			uRemoteObject.doSomething(calcCMD);
+			while (System.in.read() != '\n');
+			// Testing
+			UnicastRemoteObject.unexportObject(uRemoteObject, true);
 		} catch (RemoteException re) {
 			System.err.println("Service not found?" + " Check your RMI-Registry!");
 			System.exit(1);
