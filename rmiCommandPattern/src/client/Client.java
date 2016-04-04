@@ -16,15 +16,26 @@ import server.commands.Command;
 import server.commands.RegisterCommand;
 import server.commands.LoginCommand;
 
+/**
+ * In dieser Klasse wird eine remote Methoden aufgerufen und das Ergebnis über
+ * ein Callback zurückgegeben
+ * 
+ * @author Johannes Ucel
+ * @version 03. Apr. 2016
+ *
+ */
 public class Client {
 
+	/**
+	 * @param args
+	 *            Startargumente (Anzahl der Nachkommastellen)
+	 */
 	public static void main(String[] args) {
 		if (System.getSecurityManager() == null) {
 			System.setSecurityManager(new SecurityManager());
 		}
 		try {
 			Registry registry = LocateRegistry.getRegistry(1234);
-
 			DoSomethingService uRemoteObject = (DoSomethingService) registry.lookup("Service");
 			System.out.println("Service found");
 			ValueCallback<BigDecimal> vc = new ValueCallback<BigDecimal>();
@@ -32,7 +43,8 @@ public class Client {
 			Calculation picalc = new PICalc(Integer.parseInt(args[0]));
 			Command calcCMD = new CalculationCommand(picalc, stub);
 			uRemoteObject.doSomething(calcCMD);
-			while (System.in.read() != '\n');
+			while (System.in.read() != '\n')
+				;
 			// Testing
 			UnicastRemoteObject.unexportObject(uRemoteObject, true);
 		} catch (RemoteException re) {
