@@ -37,16 +37,32 @@ import java.rmi.server.UnicastRemoteObject;
 import compute.Compute;
 import compute.Task;
 
+/**
+ * Diese Klasse erstellt ein Remote Objekt und fügt dieses Objekt der Registry hinzu
+ * 
+ * @author Johannes Ucel
+ * @version 03. Apr. 2016
+ *
+ */
 public class ComputeEngine implements Compute {
 
+    /**
+     * Standardkonstruktor (könnte theoretisch auch leer sein)
+     */
     public ComputeEngine() {
         super();
     }
 
+    /* (non-Javadoc)
+     * @see compute.Compute#executeTask(compute.Task)
+     */
     public <T> T executeTask(Task<T> t) {
         return t.execute();
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());

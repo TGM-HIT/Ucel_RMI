@@ -27,13 +27,28 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 package compute;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * Dieses Interface stellt die Methoden vom Remote Objekt zur Verfügung
+ * 
+ * @author Johannes Ucel
+ * @version 03. Apr. 2016
+ *
+ */
 public interface Compute extends Remote {
-    <T> T executeTask(Task<T> t) throws RemoteException;
+	/**
+	 * Eine generische Methode, die einen Task ausführt
+	 * 
+	 * @param t
+	 *            ein Task
+	 * @return das Resultat vom Task
+	 * @throws RemoteException
+	 */
+	<T> T executeTask(Task<T> t) throws RemoteException;
 }

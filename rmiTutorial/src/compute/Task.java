@@ -31,6 +31,19 @@
 
 package compute;
 
+/**
+ * Generisches Interface für einen Task
+ * 
+ * @author Johannes Ucel
+ * @version 03. Apr. 2016
+ *
+ * @param <T>
+ */
 public interface Task<T> {
+    /**
+     * Methode zum Ausführen eines Tasks
+     * 
+     * @return Das Ergebnis von diesem Task
+     */
     T execute();
 }

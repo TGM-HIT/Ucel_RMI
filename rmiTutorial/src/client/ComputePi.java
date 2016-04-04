@@ -27,7 +27,7 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
+ */
 
 package client;
 
@@ -36,21 +36,32 @@ import java.rmi.registry.Registry;
 import java.math.BigDecimal;
 import compute.Compute;
 
+/**
+ * In dieser Klasse wird der Task ausgeführt
+ * 
+ * @author Johannes Ucel
+ * @version 03. Apr. 2016
+ *
+ */
 public class ComputePi {
-    public static void main(String args[]) {
-        if (System.getSecurityManager() == null) {
-            System.setSecurityManager(new SecurityManager());
-        }
-        try {
-            String name = "Compute";
-            Registry registry = LocateRegistry.getRegistry(args[0]);
-            Compute comp = (Compute) registry.lookup(name);
-            Pi task = new Pi(Integer.parseInt(args[1]));
-            BigDecimal pi = comp.executeTask(task);
-            System.out.println(pi);
-        } catch (Exception e) {
-            System.err.println("ComputePi exception:");
-            e.printStackTrace();
-        }
-    }    
+	/**
+	 * @param args
+	 *            Ort der Registry als Argument
+	 */
+	public static void main(String args[]) {
+		if (System.getSecurityManager() == null) {
+			System.setSecurityManager(new SecurityManager());
+		}
+		try {
+			String name = "Compute";
+			Registry registry = LocateRegistry.getRegistry(args[0]);
+			Compute comp = (Compute) registry.lookup(name);
+			Pi task = new Pi(Integer.parseInt(args[1]));
+			BigDecimal pi = comp.executeTask(task);
+			System.out.println(pi);
+		} catch (Exception e) {
+			System.err.println("ComputePi exception:");
+			e.printStackTrace();
+		}
+	}
 }
