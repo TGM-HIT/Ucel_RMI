@@ -7,6 +7,13 @@ import java.rmi.server.UnicastRemoteObject;
 
 import remoteService.DoSomethingService;
 
+/**
+ * Diese Klasse erstellt ein Remote Objekt und bindet diesen in die Registry
+ * 
+ * @author Johannes Ucel
+ * @version 03. Apr. 2016
+ *
+ */
 public class Server {
 
 	/**
@@ -24,7 +31,8 @@ public class Server {
 			registry.rebind("Service", stub);
 			System.out.println("Service bound! Press Enter to terminate ...");
 
-			while ( System.in.read() != '\n' );
+			while (System.in.read() != '\n')
+				;
 			UnicastRemoteObject.unexportObject(uRemoteObject, true);
 
 			System.out.println("Service unbound, System goes down ...");
