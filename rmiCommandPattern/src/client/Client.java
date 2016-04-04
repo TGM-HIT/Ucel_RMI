@@ -13,8 +13,6 @@ import callback.ValueCallback;
 import remoteService.DoSomethingService;
 import server.commands.CalculationCommand;
 import server.commands.Command;
-import server.commands.RegisterCommand;
-import server.commands.LoginCommand;
 
 /**
  * In dieser Klasse wird eine remote Methoden aufgerufen und das Ergebnis über
@@ -31,21 +29,21 @@ public class Client {
 	 *            Startargumente (Anzahl der Nachkommastellen)
 	 */
 	public static void main(String[] args) {
-		if (System.getSecurityManager() == null) {
+		if (System.getSecurityManager() == null) { //Prüft ob der SecurityManager vorhanden ist
 			System.setSecurityManager(new SecurityManager());
 		}
 		try {
-			Registry registry = LocateRegistry.getRegistry(1234);
+			Registry registry = LocateRegistry.getRegistry(1234); //Holt sich die Registry auf Port 1234
 			DoSomethingService uRemoteObject = (DoSomethingService) registry.lookup("Service");
 			System.out.println("Service found");
+			//Es wird nach dem gebindeten Service gesucht
 			ValueCallback<BigDecimal> vc = new ValueCallback<BigDecimal>();
 			Callback<BigDecimal> stub = (Callback<BigDecimal>) UnicastRemoteObject.exportObject(vc, 0);
-			Calculation picalc = new PICalc(Integer.parseInt(args[0]));
+			Calculation picalc = new PICalc(Integer.parseInt(args[0])); //Anzahl der Nachkommastellen als Argument
 			Command calcCMD = new CalculationCommand(picalc, stub);
-			uRemoteObject.doSomething(calcCMD);
+			uRemoteObject.doSomething(calcCMD); //Führt den Befehl aus
 			while (System.in.read() != '\n')
 				;
-			// Testing
 			UnicastRemoteObject.unexportObject(uRemoteObject, true);
 		} catch (RemoteException re) {
 			System.err.println("Service not found?" + " Check your RMI-Registry!");

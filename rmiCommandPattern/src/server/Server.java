@@ -27,8 +27,8 @@ public class Server {
 		try {
 			ServerService uRemoteObject = new ServerService();
 			DoSomethingService stub = (DoSomethingService) UnicastRemoteObject.exportObject(uRemoteObject, 0);
-			Registry registry = LocateRegistry.createRegistry(1234);
-			registry.rebind("Service", stub);
+			Registry registry = LocateRegistry.createRegistry(1234); //Erstellt eine Registry auf Port 1234
+			registry.rebind("Service", stub); //Bindet den Service in die Registry
 			System.out.println("Service bound! Press Enter to terminate ...");
 
 			while (System.in.read() != '\n')
