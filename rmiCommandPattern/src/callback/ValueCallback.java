@@ -13,10 +13,11 @@ import java.rmi.RemoteException;
  */
 public class ValueCallback<T> implements Callback<T>{
 
+	/* (non-Javadoc)
+	 * @see callback.Callback#receiveValue(java.lang.Object)
+	 */
 	@Override
 	public void receiveValue(T value) throws RemoteException {
 		System.out.println(value);
-		
 	}
-
 }
